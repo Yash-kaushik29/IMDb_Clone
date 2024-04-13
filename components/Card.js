@@ -2,9 +2,7 @@ import Image from "next/image";
 import React, { useEffect } from "react";
 
 const Card = ({ movie }) => {
-  useEffect(() => {
-    console.log(movie.genres);
-  });
+  
   return (
     <>
       <div class="rounded overflow-hidden shadow-lg hover:shadow-2xl dark:bg-gray-800">
