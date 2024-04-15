@@ -1,13 +1,15 @@
 "use client";
 import Card from "@/components/Card";
-import Header from "@/components/Header";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import { MdSearch } from "react-icons/md";
+import { useRouter } from "next/router";
 
 export default function Home() {
   const [movies, setMovies] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Trending Movies");
+  const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,16 +25,23 @@ export default function Home() {
       try {
         const response = await fetch(url, options);
         const res = await response.json();
-        
-        setMovies(res[0].movies);
-        console.log(movies);
+
+        const data = res.filter((d) => d.title.includes(selectedCategory));
+        console.log(data)
+        setMovies(data[0].movies);
       } catch (error) {
         console.error(error);
       }
     };
 
     fetchData();
-  }, []);
+  }, [selectedCategory]);
+
+  const handleSubmit = () => {
+    if(searchTerm !== ""){
+      router.push(`/search/${searchTerm}`);
+    }
+  }
 
   return (
     <>
@@ -44,18 +53,20 @@ export default function Home() {
       </Head>
       <main>
         <>
-          <Header />
-          <div className="flex flex-col md:flex-row justify-center sm:justify-between items-center mx-auto my-4 max-w-2xl lg:max-w-5xl">
+          <div className="flex flex-col md:flex-row justify-center sm:justify-between items-center mx-auto mt-8 max-w-2xl lg:max-w-5xl">
             <div className="flex items-center border-b border-teal-500 ml-5 mb-4 md:mb-0">
               <input
-                className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none dark:text-white"
                 type="text"
+                name={searchTerm}
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Search movies, shows"
                 aria-label="Full name"
               />
-              <MdSearch className="mt-[6px] mr-1 font-bold text-amber-500 dark:text-pink-700" />
+              <MdSearch className="mt-[6px] mr-1 font-bold text-amber-500 dark:text-pink-700 cursor-pointer" onClick={handleSubmit}/>
             </div>
-            <div className="flex items-center justify-between space-x-4 sm:space-x-6 mr-5">
+            <div className="flex items-center justify-between space-x-4 sm:space-x-8 md:mr-5">
               <span
                 className={`font-semibold hover:text-amber-500 dark:hover:text-pink-700 cursor-pointer ${
                   selectedCategory === "Trending Movies"
@@ -78,19 +89,19 @@ export default function Home() {
               </span>
               <span
                 className={`font-semibold hover:text-amber-500 dark:hover:text-pink-700 cursor-pointer ${
-                  selectedCategory === "Sci Fi"
+                  selectedCategory === "New Shows"
                     ? "underline text-amber-500 dark:text-pink-700"
                     : "no-underline text-gray-600 dark:text-white"
                 }`}
-                onClick={() => setSelectedCategory("Sci Fi")}
+                onClick={() => setSelectedCategory("New Shows")}
               >
-                Sci Fi
+                Latest Shows
               </span>
             </div>
           </div>
           <div className="p-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-            {movies.map((movie) => (
-              <Card key={movie._id} movie={movie} />
+            {movies?.map((movie, i) => (
+              <Card key={i} movie={movie} />
             ))}
           </div>
         </>
