@@ -1,30 +1,33 @@
+import Header from "@/components/Header";
 import SearchFeed from "@/components/SearchFeed";
 import React, { useEffect, useState } from "react";
 
-const SearchTerm = ({ result }) => { 
-  const[genre, setGenre] = useState("");
+const SearchTerm = ({ result }) => {
+  const [genre, setGenre] = useState("");
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
     setMovies(result.contents);
+    setGenre("");
   }, []);
 
   const filterGenre = (e) => {
-     const genre = e.target.value;
-     if(genre !== "") {
-        const updatedMovies = result.contents.filter(movie => {
-            return movie.genres.includes(genre);
-        })
-        setGenre(genre);
-        setMovies(updatedMovies);
+    const genre = e.target.value;
+    if (genre !== "") {
+      const updatedMovies = result.contents.filter((movie) => {
+        return movie.genres.includes(genre);
+      });
+      setGenre(genre);
+      setMovies(updatedMovies);
     } else {
-        setGenre("");
-        setMovies(result.contents)
+      setGenre("");
+      setMovies(result.contents);
     }
-  }
+  };
 
   return (
     <>
+      <Header />
       <div className="flex flex-col sm:flex-row justify-around items-center">
         <div className="my-5 mx-10 font-bold text-xl text-center">
           Showing Results for :{" "}
@@ -41,15 +44,18 @@ const SearchTerm = ({ result }) => {
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-700 dark:focus:border-pink-700"
                 onChange={filterGenre}
               >
-                <option value="" selected >Choose a genre---</option>
-                <option value="Action & Adventure" >Action & Adventure</option>
-                <option value="Comedy" >Comedy</option>
-                <option value="Horror" >Horror</option>
-                <option value="Drama" >Drama</option>
-                <option value="Sci-Fi & Fantasy" >Sci-Fi & Fantasy</option>
-                <option value="Thriller" >Thriller</option>
-                <option value="Crime" >Crime</option>
-                <option value="Documentary" >Documentary</option>
+                <option value="" selected>
+                  Choose a genre---
+                </option>
+                <option value="Action & Adventure">Action & Adventure</option>
+                <option value="Animation">Animation</option>
+                <option value="Comedy">Comedy</option>
+                <option value="Crime">Crime</option>
+                <option value="Documentary">Documentary</option>
+                <option value="Drama">Drama</option>
+                <option value="Horror">Horror</option>
+                <option value="Sci-Fi & Fantasy">Sci-Fi & Fantasy</option>
+                <option value="Thriller">Thriller</option>
               </select>
             </form>
           </div>
