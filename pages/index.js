@@ -38,10 +38,10 @@ export default function Home() {
   }, [selectedCategory]);
 
   const handleSubmit = () => {
-    if(searchTerm !== ""){
+    if (searchTerm !== "") {
       router.push(`/search/${searchTerm}`);
     }
-  }
+  };
 
   return (
     <>
@@ -53,7 +53,7 @@ export default function Home() {
       </Head>
       <main>
         <>
-        <Header />
+          <Header />
           <div className="flex flex-col md:flex-row justify-center sm:justify-between items-center sm:text-lg mx-auto mt-8 max-w-3xl lg:max-w-5xl py-1">
             <div className="flex items-center border-b border-teal-500 ml-5 mb-4 md:mb-0">
               <input
@@ -65,7 +65,10 @@ export default function Home() {
                 placeholder="Search movies, shows"
                 aria-label="Full name"
               />
-              <MdSearch className="mr-1 font-bold text-amber-500 dark:text-pink-700 cursor-pointer sm:text-2xl" onClick={handleSubmit}/>
+              <MdSearch
+                className="mr-1 font-bold text-amber-500 dark:text-pink-700 cursor-pointer sm:text-2xl"
+                onClick={handleSubmit}
+              />
             </div>
             <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-between space-y-1 sm:space-x-8 md:mr-5 mt-1">
               <span
