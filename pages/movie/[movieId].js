@@ -100,9 +100,10 @@ const MovieId = ({ movie, similarMovies }) => {
           </div>
         </div>
       </div>
+      <div className="bg-black dark:bg-white h-[1px] mt-5 mx-5"></div>
       <div>
         <h1 className="text-center my-10 font-bold text-2xl md:text-3xl lg:text-4xl">
-          <span className="text-amber-500 dark:text-pink-700">You</span> might
+          <span className="text-amber-500 dark:text-pink-700 text-3xl md:text-4xl lg:text-5xl animate-pulse">You</span> might
           also like
         </h1>
         <div className="p-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
