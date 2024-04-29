@@ -3,7 +3,6 @@ import Link from "next/link";
 import React from "react";
 
 const EpisodeCard = ({ episode }) => {
-  console.log(episode);
   return (
     <>
       <div className="rounded overflow-hidden shadow-lg hover:shadow-2xl dark:bg-gray-800">

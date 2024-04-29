@@ -8,13 +8,21 @@ import EpisodeCard from "@/components/EpisodeCard";
 import { useScroll, animated } from "@react-spring/web";
 import Link from "next/link";
 import ReactPlayer from "react-player";
+import Loader from "@/components/Loader";
 
 const ShowID = ({ show, seasons }) => {
+  const[loading, setLoading] = useState(true);
   const [showTrailer, setShowTrailer] = useState(false);
   const [season, setSeason] = useState(-1);
   const router = useRouter();
 
   const { scrollYProgress } = useScroll();
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000)
+  })
 
   const goBack = () => {
     router.back();
@@ -28,6 +36,8 @@ const ShowID = ({ show, seasons }) => {
   }
 
   return (
+    <>
+    {loading ? <Loader /> : 
     <>
       <div
         className="flex justify-center bg-cover bg-center h-100 md:h-screen"
@@ -165,6 +175,7 @@ const ShowID = ({ show, seasons }) => {
           </div>
         </div>
       )}
+      </>}
     </>
   );
 };

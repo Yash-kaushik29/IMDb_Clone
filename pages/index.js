@@ -5,14 +5,17 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import { MdSearch } from "react-icons/md";
 import { useRouter } from "next/router";
+import Loader from "@/components/Loader";
 
 export default function Home() {
+  const [loading, setLoading] = useState(true)
   const [movies, setMovies] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Trending Movies");
   const router = useRouter();
 
   useEffect(() => {
+    setLoading(true)
     const fetchData = async () => {
       const url = "https://movies-api14.p.rapidapi.com/home";
       const options = {
@@ -34,6 +37,9 @@ export default function Home() {
       }
     };
 
+    setTimeout(() => {
+      setLoading(false)
+    }, 1000);
     fetchData();
   }, [selectedCategory]);
 
@@ -103,11 +109,14 @@ export default function Home() {
               </span>
             </div>
           </div>
+          {loading ? <div className="relative bottom-[150px]"><Loader /></div> :
+          <>
           <div className="p-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
             {movies?.map((movie, i) => (
               <Card key={i} movie={movie} />
             ))}
           </div>
+          </>}
         </>
       </main>
     </>

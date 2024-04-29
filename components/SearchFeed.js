@@ -2,8 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect } from "react";
 import { FaStar } from "react-icons/fa";
+import Loader from "./Loader";
 
 const SearchFeed = ({ movie, genre }) => {
+
   return (
     <>
       <div className="rounded overflow-hidden shadow-lg hover:shadow-2xl dark:bg-gray-800">

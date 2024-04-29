@@ -1,14 +1,19 @@
 import Header from "@/components/Header";
+import Loader from "@/components/Loader";
 import SearchFeed from "@/components/SearchFeed";
 import React, { useEffect, useState } from "react";
 
 const SearchTerm = ({ result }) => {
   const [genre, setGenre] = useState("");
   const [movies, setMovies] = useState([]);
+  const[loading, setLoading] = useState(true);
 
   useEffect(() => {
     setMovies(result.contents);
     setGenre("");
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000)
   }, []);
 
   const filterGenre = (e) => {
@@ -28,6 +33,8 @@ const SearchTerm = ({ result }) => {
   return (
     <>
       <Header />
+      {loading ? <div className="relative bottom-[100px]"><Loader /></div> :
+      <>
       <div className="flex flex-col sm:flex-row justify-around items-center">
         <div className="my-5 mx-10 font-bold text-xl text-center">
           Showing Results for :{" "}
@@ -61,11 +68,12 @@ const SearchTerm = ({ result }) => {
           </div>
         </div>
       </div>
-      <div className="p-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+      <div className="p-10 justify-center grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
         {movies?.map((movie, i) => (
           <SearchFeed key={i} movie={movie} genre={genre} />
         ))}
       </div>
+      </>}
     </>
   );
 };

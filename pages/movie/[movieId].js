@@ -8,11 +8,19 @@ import { IoArrowBack } from "react-icons/io5";
 import Suggestions from "@/components/Suggestions";
 import { useRouter } from "next/router";
 import ReactPlayer from "react-player";
+import Loader from "@/components/Loader";
 
 const MovieId = ({ movie, similarMovies }) => {
+  const[loading, setLoading] = useState(true);
   const [showTrailer, setShowTrailer] = useState(false);
   const router = useRouter();
   const { scrollYProgress } = useScroll();
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000)
+  })
 
   const goBack = () => {
     router.back();
@@ -27,6 +35,8 @@ const MovieId = ({ movie, similarMovies }) => {
 
   return (
     <>
+     {loading ? <Loader /> :
+     <>
       <div
         className="flex justify-center bg-cover bg-center h-100 md:h-screen"
         style={{
@@ -141,7 +151,7 @@ const MovieId = ({ movie, similarMovies }) => {
               <Suggestions key={i} movie={similarMovie} />
             ))}
         </div>
-      </div>
+      </div></>}
     </>
   );
 };
